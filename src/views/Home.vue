@@ -1,13 +1,20 @@
 <template>
-  <HelloWorld />
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld';
+
+import { auth } from '../helpers'
 
 export default {
-  components: {
-    HelloWorld,
-  },
+  
+  mounted(){
+    let authorized = auth();
+
+    if(authorized.token){
+      this.$router.push("/accounts")
+    }else{
+      this.$router.push("/login")
+    }
+  }
 };
 </script>

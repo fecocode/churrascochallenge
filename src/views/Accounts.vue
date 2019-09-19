@@ -13,11 +13,23 @@ import FecoHeader from '../components/layout/Header';
 import FecoContent from '../components/layout/Content';
 import Footer from '../components/layout/Footer';
 
+import { auth } from '../helpers'
+
 export default {
+  data () {
+    return{
+      userEmail: ""
+    }
+  },
   components: {
     FecoHeader,
     FecoContent,
     Footer,
   },
+  beforeCreate(){
+    if(!auth().token){
+      this.$router.push("/login")
+    }
+  }
 };
 </script>

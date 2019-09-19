@@ -19,14 +19,22 @@
 
 <script>
 import Footer from '../components/layout/Footer';
-
 import LoginForm from '../components/LoginForm';
+
+import { auth } from '../helpers'
 
 export default {
   components: {
     Footer,
     LoginForm,
   },
+  beforeCreate(){
+    let authorized = auth();
+
+    if(authorized.token){
+      this.$router.push("/accounts")
+    }
+  }
 };
 </script>
 

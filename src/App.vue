@@ -1,17 +1,17 @@
 <template>
   <v-app>
     <v-content>
-      <Login></Login>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 <script>
-import Login from './views/Login';
+import Accounts from './views/Accounts';
 
 export default {
   name: 'App',
   components: {
-    Login,
+    Accounts,
   },
   data: () => ({
     //

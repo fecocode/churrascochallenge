@@ -12,6 +12,7 @@
                     <v-alert
                     text
                     color="red lighten-2"
+                    v-show="!isAuthorized"
                     >
                       Error de autenticación. Se ha ingresado un usuario y/o contraseña erronea.
                     </v-alert>
@@ -20,24 +21,26 @@
             <v-row>
                 <v-col cols=12>
                     <v-text-field
+                    :rules="[emailRules.required,emailRules.format]"
                     label="Correo Electrónico"
                     outlined
+                    v-model="email"
                     ></v-text-field>
                 </v-col>
             </v-row>
             <v-row>
                 <v-col cols=12>
                     <v-text-field
-                    :append-icon="show3 ? 'visibility' : 'visibility_off'"
-                    :rules="[rules.required, rules.min]"
-                    :type="show3 ? 'text' : 'password'"
-                    name="input-10-2"
+                    :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                    :rules="[passwordRules.required,]"
+                    :type="showPassword ? 'text' : 'password'"
+                    name="password"
                     label="Contraseña"
-                    hint="Al menos 8 caracteres"
                     value=""
                     class="input-group--focused"
-                    @click:append="show3 = !show3"
+                    @click:append="showPassword = !showPassword"
                     outlined
+                    v-model="password"
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -55,6 +58,7 @@
                     depressed 
                     color="primary" 
                     large
+                    @click="login"
                     >
                     Siguiente
                     </v-btn>
@@ -65,17 +69,39 @@
 </template>
 
 <script>
+import userService from "../services/user.service"
+
 export default {
 
     data () {
         return {
-        show3: false,
-        password: 'Password',
-        rules: {
-            required: value => !!value || 'Required.',
-            min: v => v.length >= 8 || 'Min 8 characters',
-            emailMatch: () => ('The email and password you entered don\'t match'),
-        },
+            email: "",
+            password: "",
+            isAuthorized: true,
+
+            emailRules: {
+                required: value => !!value || 'Este campo es requerido.',
+                format: value => /.+@.+\..+/.test(value) || 'Ingrese un correo electrónico válido.',
+            },
+
+            showPassword: false,
+            passwordRules: {
+                required: value => !!value || 'Este campo es requerido.',
+            },
+        }
+    },
+    methods:{
+        login: function () {
+            const _this = this
+            userService.login(this.email, this.password)
+            .then(function(response){
+                if(response.token){
+                    _this.$router.push("/accounts")
+                }else{
+                    _this.isAuthorized = false;
+                    _this.password = "";
+                }
+            })                
         }
     }
 }

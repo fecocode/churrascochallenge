@@ -5,14 +5,17 @@
         no-gutters
         >
             <v-col
-            cols="4"
-            offset-md="1"
+            cols="10"
+            md="4"
+            offset="1"
             >
             <account-form></account-form>
             </v-col>
             <v-col
+            cols="12"
+            md="5"
+            offset="0"
             offset-md="1"
-            cols="5"
             >
             <accounts-table></accounts-table>
             </v-col>

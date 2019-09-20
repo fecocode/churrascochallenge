@@ -5,14 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
-    
+   
+    accounts:[]
 
   },
   mutations: {
 
-  },
-  actions: {
-
+    addAccount(state,{email,firstname,lastname, avatar}){
+      state.accounts.push({
+        email,
+        firstname,
+        lastname,
+        avatar
+      });
+    } 
   }
 })

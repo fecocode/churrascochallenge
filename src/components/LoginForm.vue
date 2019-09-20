@@ -2,13 +2,13 @@
     <v-form>
         <v-container>
             <v-row>
-                <v-col cols=12>
+                <v-col>
                     <h1 class="font-weight-light">Iniciar Sesión</h1>
                     <h3 class="font-weight-light">Ingresa tu correo electrónico y contraseña</h3>
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols=12>
+                <v-col>
                     <v-alert
                     text
                     color="red lighten-2"
@@ -19,7 +19,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols=12>
+                <v-col>
                     <v-text-field
                     :rules="[emailRules.required,emailRules.format]"
                     label="Correo Electrónico"
@@ -29,7 +29,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col cols=12>
+                <v-col >
                     <v-text-field
                     :append-icon="showPassword ? 'visibility' : 'visibility_off'"
                     :rules="[passwordRules.required,]"
@@ -59,6 +59,8 @@
                     color="primary" 
                     large
                     @click="login"
+                    :loading="loading"
+                    :disabled="loading"
                     >
                     Siguiente
                     </v-btn>
@@ -78,6 +80,7 @@ export default {
             email: "",
             password: "",
             isAuthorized: true,
+            loading: false,
 
             emailRules: {
                 required: value => !!value || 'Este campo es requerido.',
@@ -93,6 +96,7 @@ export default {
     methods:{
         login: function () {
             const _this = this
+            this.loading = true
             userService.login(this.email, this.password)
             .then(function(response){
                 if(response.token){
@@ -100,6 +104,7 @@ export default {
                 }else{
                     _this.isAuthorized = false;
                     _this.password = "";
+                    _this.loading = false;
                 }
             })                
         }
@@ -107,9 +112,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     $titlecolor: #173d7a;
-    $subtitlecolor: #000;
 
     h1{
         color: $titlecolor;

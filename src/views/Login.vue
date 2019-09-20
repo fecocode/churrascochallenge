@@ -2,11 +2,11 @@
     <v-container fluid>
         <v-row 
         align="center"
-        no-gutters
         >
             <v-col
-            cols="4"
-            offset-md="1"
+            cols="10"
+            lg="4"
+            offset="1"
             >
                 <login-form></login-form>
             </v-col>
@@ -54,5 +54,11 @@ export default {
     }
     .row{
         height: 100%;
+    }
+
+    @media screen and (max-width: 600px){
+        .container{
+            background: none;
+        }
     }
 </style>

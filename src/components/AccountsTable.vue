@@ -1,45 +1,34 @@
 <template>
     <v-container fluid>
-        <v-row 
-        align="start"
-        no-gutters
+             
+        <v-list two-line subheader>
+        <v-subheader inset>Accounts</v-subheader>
+  
+        <v-list-item
+          v-for="account in accounts"
+          :key="account.email"
         >
-            <v-col
-            cols="12"
-            >
-                <v-data-table
-                  :headers="headers"
-                  :items="desserts"
-                  :items-per-page="10"
-                  hide-default-footer
-                  class="elevation-1"
-                ></v-data-table>
-            </v-col>
-        </v-row>
+          <v-list-item-avatar>
+            <v-img :src="account.avatar"></v-img>
+          </v-list-item-avatar>
+  
+          <v-list-item-content>
+            <v-list-item-title v-text="account.email"></v-list-item-title>
+            <v-list-item-subtitle v-text="account.firstname + ' ' + account.lastname"></v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        </v-list>
     </v-container>
 </template>       
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
-    data () {
-    return {
-      headers: [
-        { text: 'Avatar', value: 'avatar',},
-        { text: 'Nombre', value: 'nombre' },
-        { text: 'Apellido', value: 'apellido' },
-        { text: 'Correo electrónico', value: 'email' },
-      ],
-      desserts: [
-        {
-          avatar: "",
-          nombre: "Franco",
-          apellido: "Colares",
-          email: "hola@fecocode.com"
-        },
-        ]
-    }
-    }
+    
+    computed:mapState(['accounts']),
+
 }
 </script>
 
